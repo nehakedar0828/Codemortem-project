@@ -7,6 +7,7 @@ import com.codemortem.enums.Severity;
 import com.codemortem.enums.Status;
 import com.codemortem.service.IncidentService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -76,6 +77,23 @@ public class InidentController {
 
         return incidentService.getIncidentByStatus(status);
     }
+
+    //for pages
+    @GetMapping("/paginated")
+    public ResponseEntity<Page<IncidentResponseDTO>> getPaginatedIncidents(
+
+            @RequestParam(defaultValue = "0")
+            int page,
+
+            @RequestParam(defaultValue = "5")
+            int size){
+        //RequestParam is for reading query parameters
+        return ResponseEntity.ok(
+                incidentService.getPaginatedIncidents(
+                        page,
+                        size));
+    }
+
 
 
 }

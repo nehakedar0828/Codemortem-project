@@ -7,6 +7,9 @@ import com.codemortem.enums.Severity;
 import com.codemortem.enums.Status;
 import com.codemortem.exception.ResourceNotFoundException;
 import com.codemortem.repository.IncidentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -84,6 +87,7 @@ public class IncidentService {
         return incidentRepository.save(existingIncident);
     }
 
+    //for getting responseDTO instead of incident
     private IncidentResponseDTO mapToResponseDTO(
             Incident incident) {
 
@@ -96,6 +100,15 @@ public class IncidentService {
                 .affectedService(
                         incident.getAffectedService())
                 .build();
+    }
+
+    //for scalable backend - handle 1000 incidents at a time
+    public Page<IncidentResponseDTO> getPaginatedIncidents(int page,int size){
+
+        Pageable pageable = PageRequest.of(page,size);
+
+        return incidentRepository.findAll(pageable)
+                .map(this::mapToResponseDTO);
     }
 
 }
