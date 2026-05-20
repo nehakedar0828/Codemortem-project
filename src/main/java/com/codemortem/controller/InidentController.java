@@ -95,5 +95,15 @@ public class InidentController {
     }
 
 
+    //for sorting
+    @GetMapping("/sorted")
+    public ResponseEntity<List<IncidentResponseDTO>> getSortedIncidents(
+            @RequestParam(defaultValue = "id") String sortBy){
+
+        return ResponseEntity.ok(
+                incidentService.getSortedIncidents(sortBy));
+    }
+
+
 
 }

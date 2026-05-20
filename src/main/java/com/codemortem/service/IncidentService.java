@@ -10,6 +10,7 @@ import com.codemortem.repository.IncidentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -109,6 +110,16 @@ public class IncidentService {
 
         return incidentRepository.findAll(pageable)
                 .map(this::mapToResponseDTO);
+    }
+
+    //to sort the responses according to specific condition like severity status etc.
+    public List<IncidentResponseDTO> getSortedIncidents(String sortBy){
+
+        return incidentRepository
+                .findAll(Sort.by(sortBy))
+                .stream()
+                .map(this::mapToResponseDTO)
+                .toList();
     }
 
 }
