@@ -12,4 +12,9 @@ public interface IncidentRepository extends JpaRepository<Incident, Long> {
     List<Incident> findBySeverity(Severity severity);
 
     List<Incident> findByStatus(Status status);
+
+    List<Incident> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
+            String titleKeyword,
+            String descriptionKeyword
+    );
 }

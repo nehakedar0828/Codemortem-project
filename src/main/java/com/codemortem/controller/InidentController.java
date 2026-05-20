@@ -104,6 +104,15 @@ public class InidentController {
                 incidentService.getSortedIncidents(sortBy));
     }
 
+    //for search
+    @GetMapping("/search")
+    public ResponseEntity<List<IncidentResponseDTO>> searchIncidents(
+
+            @RequestParam String keyword){
+
+        return ResponseEntity.ok(
+                incidentService.searchIncidents(keyword));
+    }
 
 
 }

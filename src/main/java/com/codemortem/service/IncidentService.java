@@ -122,4 +122,17 @@ public class IncidentService {
                 .toList();
     }
 
+    //to search on particular title or description
+    public List<IncidentResponseDTO> searchIncidents(String keyword){
+
+        return incidentRepository
+                .findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
+                        keyword,
+                        keyword
+                )
+                .stream()
+                .map(this::mapToResponseDTO)
+                .toList();
+    }
+
 }
