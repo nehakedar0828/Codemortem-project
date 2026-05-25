@@ -2,6 +2,7 @@ package com.codemortem.service;
 
 import com.codemortem.dto.IncidentRequestDTO;
 import com.codemortem.dto.IncidentResponseDTO;
+import com.codemortem.dto.SimilarIncidentDTO;
 import com.codemortem.entity.Incident;
 import com.codemortem.enums.Severity;
 import com.codemortem.enums.Status;
@@ -13,7 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 //actual business logic here : controller -> service -> repository -> database
 @Service
@@ -133,6 +135,55 @@ public class IncidentService {
                 .stream()
                 .map(this::mapToResponseDTO)
                 .toList();
+    }
+
+    //to find similarity score and find similar incidents
+    public List<SimilarIncidentDTO> findSimilarIncidents(String inputText){
+
+        List<Incident> incidents = incidentRepository.findAll();
+
+        List<SimilarIncidentDTO> results = new ArrayList<>();
+
+        Set<String> inputWords = Arrays.stream(inputText.toLowerCase().split("\\s+"))
+                .collect(Collectors.toSet());
+
+        for(Incident incident : incidents){
+
+            String combinedText =
+                    (incident.getTitle()+ " " +
+                            incident.getDescription())
+                                    .toLowerCase();
+
+            Set<String> incidentWords =
+                    Arrays.stream(combinedText.split("\\s+"))
+                            .collect(Collectors.toSet());
+
+            Set<String> commonWords = new HashSet<>(inputWords);
+
+            commonWords.retainAll(incidentWords);
+
+            double score =
+                    (double) commonWords.size()/inputWords.size();
+
+            if(score > 0){
+
+                results.add(
+                        new SimilarIncidentDTO(
+                                incident.getId(),
+                                incident.getTitle(),
+                                score
+                        )
+                );
+            }
+        }
+
+        results.sort((a,b) ->
+                Double.compare(
+                        b.getSimilarityScore(),
+                        a.getSimilarityScore()
+                ));
+
+        return results;
     }
 
 }

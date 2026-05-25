@@ -2,6 +2,7 @@ package com.codemortem.controller;
 
 import com.codemortem.dto.IncidentRequestDTO;
 import com.codemortem.dto.IncidentResponseDTO;
+import com.codemortem.dto.SimilarIncidentDTO;
 import com.codemortem.entity.Incident;
 import com.codemortem.enums.Severity;
 import com.codemortem.enums.Status;
@@ -112,6 +113,15 @@ public class InidentController {
 
         return ResponseEntity.ok(
                 incidentService.searchIncidents(keyword));
+    }
+
+    //for similar incidents mapping
+    @GetMapping("/similar")
+    public ResponseEntity<List<SimilarIncidentDTO>> findSimilarIncidents(
+            @RequestParam String text
+    ){
+        return ResponseEntity.ok(
+                incidentService.findSimilarIncidents(text));
     }
 
 
