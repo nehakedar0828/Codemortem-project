@@ -4,6 +4,7 @@ import com.codemortem.dto.SignUpRequestDTO;
 import com.codemortem.entity.User;
 import com.codemortem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.codemortem.config.JwtUtil;
@@ -64,5 +65,14 @@ public class AuthService {
             String token = jwtUtil.generateToken(user.getEmail());
 
         return new AuthResponseDTO(token);
+    }
+
+    public String getCurrentEmail(){
+
+        return SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+
     }
 }

@@ -4,10 +4,13 @@ import com.codemortem.dto.IncidentRequestDTO;
 import com.codemortem.dto.IncidentResponseDTO;
 import com.codemortem.dto.SimilarIncidentDTO;
 import com.codemortem.entity.Incident;
+import com.codemortem.entity.User;
 import com.codemortem.enums.Severity;
 import com.codemortem.enums.Status;
 import com.codemortem.exception.ResourceNotFoundException;
 import com.codemortem.repository.IncidentRepository;
+import com.codemortem.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,14 +22,14 @@ import java.util.stream.Collectors;
 
 //actual business logic here : controller -> service -> repository -> database
 @Service
+@RequiredArgsConstructor
 public class IncidentService {
 
     private final IncidentRepository incidentRepository;
 
+    private final AuthService authService;
 
-    public IncidentService(IncidentRepository incidentRepository) {
-        this.incidentRepository = incidentRepository;
-    }
+    private final UserRepository userRepository;
 
     //Create
     public IncidentResponseDTO createIncident(
@@ -39,6 +42,15 @@ public class IncidentService {
         incident.setStatus(requestDTO.getStatus());
         incident.setAffectedService(requestDTO.getAffectedService());
 
+        String email = authService.getCurrentEmail();
+
+        User user = userRepository
+                .findByEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found"));
+
+        incident.setReportedBy(user);
+
         Incident savedIncident = incidentRepository.save(incident);
 
         return mapToResponseDTO(savedIncident);
@@ -46,14 +58,33 @@ public class IncidentService {
 
     //Read one
     public Incident getIncidentById(Long id){
-        return incidentRepository.findById(id)
+
+        String email = authService.getCurrentEmail();
+
+        Incident incident = incidentRepository
+                .findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Incident not found"));
+
+        if(!incident.getReportedBy()
+                .getEmail()
+                .equals(email)){
+
+            throw new RuntimeException("Access Denied");
+
+        }
+
+        return incident;
+
     }
 
     //read all
     public List<IncidentResponseDTO> getAllIncidents(){
-        return incidentRepository.findAll()
+
+        String email = authService.getCurrentEmail();
+
+        return incidentRepository
+                .findByReportedByEmail(email)
                 .stream()
                 .map(this::mapToResponseDTO)
                 .toList();
@@ -61,7 +92,25 @@ public class IncidentService {
 
     //delete
     public void deleteIncident(Long id){
-        incidentRepository.deleteById(id);
+
+        String email =
+                authService.getCurrentEmail();
+
+        Incident incident = incidentRepository
+                .findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Incident not found"));
+
+        if(!incident.getReportedBy()
+                .getEmail()
+                .equals(email)) {
+
+            throw new RuntimeException(
+                    "Access denied");
+        }
+
+        incidentRepository.delete(incident);
     }
 
     //filter by severity

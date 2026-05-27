@@ -16,9 +16,9 @@ import com.codemortem.enums.Status;
 
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class Incident {
 
     @Id

@@ -17,4 +17,6 @@ public interface IncidentRepository extends JpaRepository<Incident, Long> {
             String titleKeyword,
             String descriptionKeyword
     );
+
+    List<Incident> findByReportedByEmail(String email);
 }
