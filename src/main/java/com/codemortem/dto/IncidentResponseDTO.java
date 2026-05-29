@@ -2,12 +2,12 @@ package com.codemortem.dto;
 
 import com.codemortem.enums.Severity;
 import com.codemortem.enums.Status;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class IncidentResponseDTO {
 
@@ -22,4 +22,6 @@ public class IncidentResponseDTO {
     private Status status;
 
     private String affectedService;
+
+    private String aiAnalysis;
 }

@@ -1,5 +1,6 @@
 package com.codemortem.service;
 
+import com.codemortem.dto.AIAnalysisResponseDTO;
 import com.codemortem.dto.IncidentRequestDTO;
 import com.codemortem.dto.IncidentResponseDTO;
 import com.codemortem.dto.SimilarIncidentDTO;
@@ -11,6 +12,7 @@ import com.codemortem.exception.ResourceNotFoundException;
 import com.codemortem.repository.IncidentRepository;
 import com.codemortem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +32,8 @@ public class IncidentService {
     private final AuthService authService;
 
     private final UserRepository userRepository;
+
+    private final AIAnalysisService aiAnalysisService;
 
     //Create
     public IncidentResponseDTO createIncident(
@@ -151,6 +155,7 @@ public class IncidentService {
                 .status(incident.getStatus())
                 .affectedService(
                         incident.getAffectedService())
+                .aiAnalysis(incident.getAiAnalysis())
                 .build();
     }
 
@@ -233,6 +238,39 @@ public class IncidentService {
                 ));
 
         return results;
+    }
+
+    public IncidentResponseDTO analyzeIncident(
+            Long id
+    ){
+
+        String email = authService.getCurrentEmail();
+
+        Incident incident = incidentRepository
+                .findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Incident not found"));
+
+        if(!incident.getReportedBy()
+                .getEmail()
+                .equals(email)){
+            throw new RuntimeException("Unauthorized access");
+        }
+
+        AIAnalysisResponseDTO aiResponse =
+                aiAnalysisService
+                        .analyzeIncident(
+                                incident.getTitle(),
+                                incident.getDescription()
+                        );
+
+        incident.setAiAnalysis(
+                aiResponse.getAnalysis());
+
+        Incident savedIncident = incidentRepository.save(incident);
+
+        return mapToResponseDTO(savedIncident);
+
     }
 
 }

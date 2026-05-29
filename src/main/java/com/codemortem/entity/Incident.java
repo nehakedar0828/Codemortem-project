@@ -63,4 +63,7 @@ public class Incident {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private List<Tag> tags;
+
+    @Column(columnDefinition = "TEXT")
+    private String aiAnalysis;
 }

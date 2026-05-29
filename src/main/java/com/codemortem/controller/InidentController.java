@@ -124,5 +124,15 @@ public class InidentController {
                 incidentService.findSimilarIncidents(text));
     }
 
+    @PostMapping("{id}/analyze")
+    public ResponseEntity<IncidentResponseDTO> analyzeIncident(
+            @PathVariable Long id
+    ){
+
+        return ResponseEntity.ok(
+                incidentService.analyzeIncident(id)
+        );
+    }
+
 
 }
