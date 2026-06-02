@@ -261,7 +261,9 @@ public class IncidentService {
                 aiAnalysisService
                         .analyzeIncident(
                                 incident.getTitle(),
-                                incident.getDescription()
+                                incident.getDescription(),
+                                incident.getAffectedService(),
+                                incident.getSeverity()
                         );
 
         incident.setAiAnalysis(

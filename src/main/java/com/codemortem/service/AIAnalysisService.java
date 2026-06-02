@@ -3,12 +3,14 @@ package com.codemortem.service;
 import com.codemortem.dto.AIAnalysisResponseDTO;
 import com.codemortem.dto.OpenRouterRequestDTO;
 import com.codemortem.dto.OpenRouterResponseDTO;
+import com.codemortem.entity.Incident;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.swing.*;
 import java.util.List;
 
 @Service
@@ -23,38 +25,57 @@ public class AIAnalysisService {
     public AIAnalysisResponseDTO analyzeIncident(
 
             String title,
-            String description) {
+            String description,
+            String affectedService,
+            Object severity) {
 
         String prompt = """
-You are an incident analysis assistant.
+You are a senior Site Reliability Engineer (SRE) and production incident response expert.
 
-Analyze the incident below and return ONLY plain text.
+Analyze the following software production incident professionally.
 
-Do not use:
-- markdown
-- stars
-- hashtags
-- bullet points
-- bold formatting
+Provide your response STRICTLY in this format:
 
-Incident Title:
+Incident Summary:
+- Briefly summarize the issue.
+
+Most Likely Root Causes:
+- Mention the most probable technical causes.
+
+Immediate Mitigation Steps:
+- Suggest urgent actions to stabilize the system.
+
+Debugging Checklist:
+- Provide step-by-step debugging guidance.
+
+Long-Term Preventive Fixes:
+- Suggest architectural or operational improvements.
+
+Risk Assessment:
+- Mention the potential business or system impact if unresolved.
+
+Keep the response practical, concise, and production-focused.
+Avoid generic explanations.
+
+Incident Details:
+
+Title:
 %s
 
-Incident Description:
+Description:
 %s
 
-Response format exactly:
+Affected Service:
+%s
 
-Probable Issue:
-<write here>
-
-Debugging Suggestions:
-<write here>
-
-Possible Fixes:
-<write here>
-"""
-                .formatted(title, description);
+Severity:
+%s
+""".formatted(
+                title,
+                description,
+                affectedService,
+                severity
+        );
 
         OpenRouterRequestDTO.Message message =
                 new OpenRouterRequestDTO.Message(

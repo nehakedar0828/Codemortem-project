@@ -24,7 +24,9 @@ public class AIAnalysisController {
         return aiAnalysisService
                 .analyzeIncident(
                         dto.getTitle(),
-                        dto.getDescription()
+                        dto.getDescription(),
+                        dto.getAffectedService(),
+                        dto.getSeverity()
                 );
     }
 }
