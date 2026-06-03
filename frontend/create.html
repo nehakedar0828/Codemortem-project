@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Create Incident</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Create Incident</h1>
+
+    <form id="incidentForm">
+
+        <div class="input-group">
+            <label>Title</label>
+
+            <input type="text"
+                   id="title"
+                   required>
+        </div>
+
+        <div class="input-group">
+            <label>Description</label>
+
+            <input type="text"
+                   id="description"
+                   required>
+        </div>
+
+        <div class="input-group">
+            <label>Affected Service</label>
+
+            <input type="text"
+                   id="affectedService"
+                   required>
+        </div>
+
+        <div class="input-group">
+            <label>Severity</label>
+
+            <select id="severity">
+
+                <option value="LOW">
+                    LOW
+                </option>
+
+                <option value="MEDIUM">
+                    MEDIUM
+                </option>
+
+                <option value="HIGH">
+                    HIGH
+                </option>
+
+            </select>
+        </div>
+
+        <button type="submit">
+            Create Incident
+        </button>
+
+    </form>
+
+</div>
+
+<script src="js/create.js"></script>
+
+</body>
+</html>
