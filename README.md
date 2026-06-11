@@ -147,27 +147,6 @@ Incident Resolution
 
 ---
 
-## Screenshots
-
-### Landing Page
-
-<img width="100%" alt="Landing Page Screenshot" src="screenshots/landing-page.png">
-
-### Login Page
-
-<img width="100%" alt="Login Page Screenshot" src="screenshots/login-page.png">
-
-### Dashboard
-
-<img width="100%" alt="Dashboard Screenshot" src="screenshots/dashboard.png">
-
-### Incident Details
-
-<img width="100%" alt="Incident Details Screenshot" src="screenshots/incident-details.png">
-
-### AI Analysis Report
-
-<img width="100%" alt="AI Analysis Screenshot" src="screenshots/ai-analysis.png">
 
 ### Swagger Documentation
 
