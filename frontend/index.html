@@ -1,0 +1,578 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CodeMortem</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+    <style>
+
+        *{
+            scroll-behavior:smooth;
+        }
+
+        body{
+            display:block;
+            overflow-x:hidden;
+            color:white;
+        }
+
+        /* NAVBAR */
+
+        .navbar{
+
+            width:100%;
+
+            display:flex;
+
+            justify-content:space-between;
+            align-items:center;
+
+            padding:25px 60px;
+
+            position:fixed;
+
+            top:0;
+
+            background:
+                rgba(0,0,0,0.2);
+
+            backdrop-filter:blur(10px);
+
+            z-index:1000;
+        }
+
+        .navbar h2{
+            color:white;
+            font-size:32px;
+        }
+
+        .nav-buttons{
+            display:flex;
+            gap:15px;
+        }
+
+        .nav-buttons button{
+            width:120px;
+        }
+
+        /* HERO */
+
+        .hero{
+
+            min-height:100vh;
+
+            display:flex;
+            flex-direction:column;
+
+            justify-content:center;
+            align-items:center;
+
+            text-align:center;
+
+            padding-top:100px;
+            padding-bottom:100px;
+
+            color:white;
+        }
+
+        .hero h1{
+
+            font-size:90px;
+
+            margin-bottom:20px;
+
+            text-shadow:
+                    0 0 20px rgba(0,198,255,0.6);
+        }
+
+        .hero p{
+
+            font-size:24px;
+
+            max-width:850px;
+
+            line-height:1.8;
+
+            margin-bottom:40px;
+        }
+
+        .hero-buttons{
+            display:flex;
+            gap:20px;
+        }
+
+        .hero-buttons button{
+            width:180px;
+            height:55px;
+            font-size:18px;
+        }
+
+        /* FEATURES */
+
+        .features{
+
+            padding:100px 60px;
+
+            color:white;
+        }
+
+        .features h2{
+
+            text-align:center;
+
+            margin-bottom:60px;
+
+            font-size:48px;
+        }
+
+        .feature-grid{
+
+            display:grid;
+
+            grid-template-columns:
+                    repeat(auto-fit,minmax(280px,1fr));
+
+            gap:30px;
+        }
+
+        .feature-card{
+
+            background:
+                    rgba(255,255,255,0.08);
+
+            backdrop-filter:blur(10px);
+
+            border-radius:20px;
+
+            padding:30px;
+
+            box-shadow:
+                    0 8px 32px rgba(0,0,0,0.3);
+
+            transition:0.3s;
+        }
+
+        .feature-card:hover{
+
+            transform:
+                    translateY(-10px);
+        }
+
+        .feature-card h3{
+
+            margin-bottom:20px;
+
+            color:#00c6ff;
+
+            font-size:28px;
+        }
+
+        .feature-card p{
+
+            line-height:1.8;
+            font-size:17px;
+        }
+
+        /* WORKFLOW */
+
+        .workflow-step{
+
+            text-align:center;
+        }
+
+        .workflow-step h1{
+
+            font-size:70px;
+            color:#00c6ff;
+
+            margin-bottom:20px;
+        }
+
+        /* CTA */
+
+        .cta-section{
+
+            padding:120px 40px;
+
+            text-align:center;
+        }
+
+        .cta-section h1{
+
+            font-size:60px;
+
+            margin-bottom:30px;
+        }
+
+        .cta-section p{
+
+            max-width:800px;
+
+            margin:auto;
+
+            line-height:1.8;
+
+            font-size:22px;
+
+            margin-bottom:40px;
+        }
+
+        .cta-buttons{
+
+            display:flex;
+
+            justify-content:center;
+
+            gap:20px;
+        }
+
+        .cta-buttons button{
+
+            width:200px;
+            height:55px;
+
+            font-size:18px;
+        }
+
+        /* FOOTER */
+
+        footer{
+
+            text-align:center;
+
+            padding:40px;
+
+            color:white;
+
+            opacity:0.7;
+
+            font-size:16px;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:768px){
+
+            .hero h1{
+                font-size:60px;
+            }
+
+            .hero p{
+                font-size:18px;
+            }
+
+            .features h2{
+                font-size:36px;
+            }
+
+            .navbar{
+                padding:20px;
+            }
+
+            .nav-buttons{
+                flex-direction:column;
+            }
+
+            .hero-buttons,
+            .cta-buttons{
+                flex-direction:column;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <h2>CodeMortem</h2>
+
+    <div class="nav-buttons">
+
+        <button onclick="goToLogin()">
+            Login
+        </button>
+
+        <button onclick="goToRegister()">
+            Register
+        </button>
+
+    </div>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <h1>CodeMortem 🚀</h1>
+
+    <p>
+
+        AI-powered incident management platform
+        designed to help engineering teams
+        detect, analyze, debug, and resolve
+        production incidents faster using
+        intelligent operational guidance.
+
+    </p>
+
+    <div class="hero-buttons">
+
+        <button onclick="goToLogin()">
+            Login
+        </button>
+
+        <button onclick="goToRegister()">
+            Register
+        </button>
+
+    </div>
+
+</section>
+
+<!-- FEATURES -->
+
+<section class="features">
+
+    <h2>Platform Features</h2>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+
+            <h3>AI Incident Analysis</h3>
+
+            <p>
+                Generate operational debugging
+                guidance with AI-powered analysis
+                for production incidents.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <h3>JWT Authentication</h3>
+
+            <p>
+                Secure authentication workflows
+                with protected incident APIs and
+                authorization support.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <h3>Operational Dashboard</h3>
+
+            <p>
+                Interactive incident dashboard
+                with filtering, searching,
+                AI analysis, and management.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <h3>Incident Search</h3>
+
+            <p>
+                Search and filter incidents
+                instantly for faster operational
+                workflows.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- WORKFLOW -->
+
+<section class="features">
+
+    <h2>How CodeMortem Works</h2>
+
+    <div class="feature-grid">
+
+        <div class="feature-card workflow-step">
+
+            <h1>1</h1>
+
+            <h3>Report Incident</h3>
+
+            <p>
+                Create incidents using the
+                operational dashboard with
+                severity tracking.
+            </p>
+
+        </div>
+
+        <div class="feature-card workflow-step">
+
+            <h1>2</h1>
+
+            <h3>Analyze with AI</h3>
+
+            <p>
+                Generate intelligent debugging,
+                mitigation, and root cause
+                guidance instantly.
+            </p>
+
+        </div>
+
+        <div class="feature-card workflow-step">
+
+            <h1>3</h1>
+
+            <h3>Resolve Faster</h3>
+
+            <p>
+                Improve operational efficiency,
+                reduce downtime, and streamline
+                incident management workflows.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- HIGHLIGHTS -->
+
+<section class="features">
+
+    <h2>Platform Highlights</h2>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+
+            <h3>Spring Boot Backend</h3>
+
+            <p>
+                Production-ready REST APIs with
+                secure architecture and JWT
+                authentication.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <h3>AI-Powered Guidance</h3>
+
+            <p>
+                Intelligent operational analysis
+                for debugging and mitigation
+                recommendations.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <h3>Modern Dashboard</h3>
+
+            <p>
+                Glassmorphism-based UI with
+                modern operational styling and
+                responsive layouts.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <h3>Incident Lifecycle</h3>
+
+            <p>
+                Create, search, analyze, and
+                manage incidents through a
+                unified workflow.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FINAL CTA -->
+
+<section class="cta-section">
+
+    <h1>Start Managing Incidents Smarter</h1>
+
+    <p>
+
+        CodeMortem combines AI-powered analysis,
+        operational dashboards, and secure
+        incident workflows into one modern
+        engineering platform.
+
+    </p>
+
+    <div class="cta-buttons">
+
+        <button onclick="goToRegister()">
+            Create Account
+        </button>
+
+        <button onclick="goToLogin()">
+            Login
+        </button>
+
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+    Built with Spring Boot, MySQL, JWT,
+    Swagger, and AI 🚀
+
+</footer>
+
+<script>
+
+    function goToLogin(){
+
+        window.location.href =
+            "login.html";
+    }
+
+    function goToRegister(){
+
+        window.location.href =
+            "register.html";
+    }
+
+</script>
+
+</body>
+</html>
+```
